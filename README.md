@@ -1,3 +1,5 @@
+<img width="600" alt="git hunter logo" src="https://i.imgur.com/1LJVDfq.png">
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
