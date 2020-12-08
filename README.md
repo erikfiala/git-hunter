@@ -1,8 +1,8 @@
 <img width="600" alt="git hunter logo" src="https://i.imgur.com/1LJVDfq.png">
 
-# Getting Started with Create React App
+# Getting Started with Git Hunter
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Building a GitHub user search that allows you to access their contact details easily.
 
 ## Available Scripts
 
