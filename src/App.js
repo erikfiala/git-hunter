@@ -3,35 +3,66 @@ import "./app.css"
 import React, { useEffect, useState } from "react"
 
 function App() {
-	// const [avatar, setAvatar] = useState("")
-	// const [name, setName] = useState("")
-	// const [userName, setUsername] = useState("")
-	// const [email, setEmail] = useState("")
-	// const [twitterUsername, setTwitterUsername] = useState("")
-	// const [userInput, setUserInput] = useState("")
-	// const [error, setError] = useState(null)
+	const [avatar, setAvatar] = useState("")
+	const [name, setName] = useState("")
+	const [username, setUsername] = useState("")
+	const [email, setEmail] = useState("")
+	const [twitterUsername, setTwitterUsername] = useState("")
+	const [company, setCompany] = useState("")
+	const [status, setStatus] = useState(Boolean)
+	const [userInput, setUserInput] = useState("")
+	const [error, setError] = useState(null)
+
+	useEffect(() => {
+		fetch("https://api.github.com/users/example")
+			.then((res) => res.json())
+			.then((data) => {
+				setData(data)
+			})
+	}, [])
+
+	const setData = ({
+		avatar_url,
+		name,
+		login,
+		email,
+		twitter_username,
+		company,
+		hireable,
+	}) => {
+		setAvatar(avatar_url)
+		setName(name)
+		setUsername(login)
+		setEmail(email)
+		setTwitterUsername(twitter_username)
+		setCompany(company)
+		setStatus(hireable)
+	}
+
+	const handleSearch = (e) => {
+		setUserInput(e.target.value)
+	}
+
+	const handleSubmit = () => {
+		fetch(`https://api.github.com/users/${userInput}`)
+			.then((res) => res.json())
+			.then((data) => {
+				if (data.message) {
+					setError(data.message)
+				} else {
+					setData(data)
+				}
+			})
+	}
 
 	return (
-		// <div className="bg-gray-100 min-h-screen font-sans antialiased">
-		// 	<div className="bg-gray-300 p-4">Git Hunter</div>
-		// 	<div className="grid grid-cols-1 gap-4 m-4">
-		// 		<div className="space-x-4">
-		// 			<form>
-		// 				<input
-		// 					className="bg-white h-12 w-full rounded-lg
-		// 					border-solid border border-gray-200 p-4"
-		// 					placeholder="Search GitHub users"
-		// 				></input>
-		// 			</form>
-		// 		</div>
-		// 	</div>
-		// </div>
 		<div className="bg-gray-200 min-h-screen font-sans antialiased">
 			<div className="bg-white p-4">Git Hunter</div>
-			<form className="mt-4 ml-4 mr-4">
+			<form className="mt-4 ml-4 mr-4" onSubmit={handleSubmit}>
 				<input
 					className="bg-white h-12 w-full shadow overflow-hidden border-b border-gray-200 sm:rounded-lg p-4"
 					placeholder="Search GitHub users"
+					onChange={handleSearch}
 				></input>
 			</form>
 			<div className="flex flex-col p-4">
@@ -51,7 +82,7 @@ function App() {
 											scope="col"
 											className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
 										>
-											Orgs
+											Company
 										</th>
 										<th
 											scope="col"
@@ -61,7 +92,7 @@ function App() {
 										</th>
 										<th
 											scope="col"
-											className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+											className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider"
 										>
 											🐦
 										</th>
@@ -70,63 +101,72 @@ function App() {
 											className="relative px-6 py-3"
 										>
 											<span className="sr-only">
-												Edit
+												Actions
 											</span>
 										</th>
 									</tr>
 								</thead>
-								<tbody className="bg-white divide-y divide-gray-200">
-									<tr>
-										<td className="px-6 py-4 whitespace-nowrap">
-											<div className="flex items-center">
-												<div className="flex-shrink-0 h-10 w-10">
-													<img
-														className="h-10 w-10 rounded-full"
-														src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60"
-														alt=""
-													/>
-												</div>
-												<div className="ml-4">
-													<div className="text-sm font-semibold text-gray-900">
-														Jane Cooper
+								{error ? (
+									<p>{error}</p>
+								) : (
+									<tbody className="bg-white divide-y divide-gray-200">
+										<tr>
+											<td className="px-6 py-4 whitespace-nowrap">
+												<div className="flex items-center">
+													<div className="flex-shrink-0 h-10 w-10">
+														<img
+															className="h-10 w-10 rounded-full"
+															src={avatar}
+															alt="profile picture"
+														/>
 													</div>
-													<div className="text-sm text-gray-500">
-														jane_cooper
+													<div className="ml-4">
+														<div className="text-sm font-semibold text-gray-900">
+															{name}
+														</div>
+														<div className="text-sm text-gray-500">
+															{username}
+														</div>
 													</div>
 												</div>
-											</div>
-										</td>
-										<td className="px-6 py-4 whitespace-nowrap">
-											<div className="text-sm text-gray-900">
-												Facebook
-											</div>
-											{/* <div className="text-sm text-gray-500">
+											</td>
+											<td className="px-6 py-4 whitespace-nowrap">
+												<div className="text-sm text-gray-900">
+													{company}
+												</div>
+												{/* <div className="text-sm text-gray-500">
 												Optimization
 											</div> */}
-										</td>
-										<td className="px-6 py-4 whitespace-nowrap">
-											<span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-												Available for hire
-											</span>
-										</td>
-										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-											@jane_cooper
-										</td>
-										<td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-											<a
-												href="#"
-												className="text-indigo-600 hover:text-indigo-900"
-											>
-												Contact
+											</td>
+											<td className="px-6 py-4 whitespace-nowrap">
+												<span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+													{status}
+												</span>
+											</td>
+											<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+												{twitterUsername}
+											</td>
+											<td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+												<a
+													href="mailto:{email}"
+													className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
+												>
+													Contact
+												</a>
 												<span className="text-gray-400 cursor-default">
 													{"  "}·{"  "}
 												</span>
-												Save
-											</a>
-										</td>
-									</tr>
-									{/* more rows */}
-								</tbody>
+												<a
+													href="#"
+													className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
+												>
+													Save
+												</a>
+											</td>
+										</tr>
+										{/* more rows */}
+									</tbody>
+								)}
 							</table>
 						</div>
 					</div>
