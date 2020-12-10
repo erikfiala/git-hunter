@@ -28,6 +28,12 @@ function App() {
 		// </div>
 		<div className="bg-gray-200 min-h-screen font-sans antialiased">
 			<div className="bg-white p-4">Git Hunter</div>
+			<form className="mt-4 ml-4 mr-4">
+				<input
+					className="bg-white h-12 w-full shadow overflow-hidden border-b border-gray-200 sm:rounded-lg p-4"
+					placeholder="Search GitHub users"
+				></input>
+			</form>
 			<div className="flex flex-col p-4">
 				<div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
 					<div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -39,13 +45,13 @@ function App() {
 											scope="col"
 											className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
 										>
-											Name
+											User
 										</th>
 										<th
 											scope="col"
 											className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
 										>
-											Title
+											Orgs
 										</th>
 										<th
 											scope="col"
@@ -57,7 +63,7 @@ function App() {
 											scope="col"
 											className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
 										>
-											Role
+											🐦
 										</th>
 										<th
 											scope="col"
@@ -81,37 +87,41 @@ function App() {
 													/>
 												</div>
 												<div className="ml-4">
-													<div className="text-sm font-medium text-gray-900">
+													<div className="text-sm font-semibold text-gray-900">
 														Jane Cooper
 													</div>
 													<div className="text-sm text-gray-500">
-														jane.cooper@example.com
+														jane_cooper
 													</div>
 												</div>
 											</div>
 										</td>
 										<td className="px-6 py-4 whitespace-nowrap">
 											<div className="text-sm text-gray-900">
-												Regional Paradigm Technician
+												Facebook
 											</div>
-											<div className="text-sm text-gray-500">
+											{/* <div className="text-sm text-gray-500">
 												Optimization
-											</div>
+											</div> */}
 										</td>
 										<td className="px-6 py-4 whitespace-nowrap">
 											<span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-												Active
+												Available for hire
 											</span>
 										</td>
 										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-											Admin
+											@jane_cooper
 										</td>
 										<td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
 											<a
 												href="#"
 												className="text-indigo-600 hover:text-indigo-900"
 											>
-												Edit
+												Contact
+												<span className="text-gray-400 cursor-default">
+													{"  "}·{"  "}
+												</span>
+												Save
 											</a>
 										</td>
 									</tr>
